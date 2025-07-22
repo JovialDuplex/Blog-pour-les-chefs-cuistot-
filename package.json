@@ -1,0 +1,38 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "Ce blog est pour les chefs de la cuisson et les passione de cela car ici ils pourront rencontre d'autre chefs de la cuisson",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JovialDuplex/Blog-pour-les-chefs-cuistot-.git"
+  },
+  "author": "Jovial Duplex",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JovialDuplex/Blog-pour-les-chefs-cuistot-/issues"
+  },
+  "homepage": "https://github.com/JovialDuplex/Blog-pour-les-chefs-cuistot-#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^17.0.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-fileupload": "^1.5.1",
+    "express-joi-validations": "^0.1.0",
+    "express-session": "^1.18.1",
+    "express-validator": "^7.2.1",
+    "express-ws": "^5.0.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.0",
+    "morgan": "^1.10.0",
+    "multer": "^2.0.1",
+    "offline-npm": "^0.2.2",
+    "validator": "^13.15.15",
+    "ws": "^8.18.2"
+  }
+}
