@@ -1,9 +1,35 @@
 {
     "users" : [
+        {
+            "name" : "jovial duplex",
+            "email" : "jovial123@gmail.com",
+            "password" : "1234@aa1"
+        },
 
+        {
+            "name" : "tommy jefferson",
+            "email" : "tommy@gmail.com",
+            "password": "jeff1234"
+        }
     ], 
 
     "articles" : [
-        
+        {
+            "article_title" : "Burger",
+            "article_descrip" : "Le burger une cuisson originaire d'amerique",
+            "article_content" : "La preparation du burger est tres simple et pour cela nous auront besoin de : pain, viande, mayonnaise et bien d'autres"
+        },
+
+        {
+            "article_title" : "pizza",
+            "article_descrip" : "La pizza le plat italien le plus populaire",
+            "article_content" : "La preparation de la pizza est tres simple et pour cela nous auront besoin de : pain, sauce tomate, du fromage et bien d'autres"
+        }
+    ],
+
+    "categories" : [
+        "Cuisine pour debutant",
+        "Cuisine pour professionnel",
+        "Cuisine Intermedaire"
     ]
 }

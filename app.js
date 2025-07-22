@@ -11,4 +11,4 @@ config.appConfigMiddleware(app, express);
 app.listen(port, _=>{
 
     console.log("server is listening on the localhost:%s ", port);
-})
+});
