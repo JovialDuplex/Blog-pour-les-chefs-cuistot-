@@ -22,7 +22,12 @@ const articleValidation = joi.object({
                       .messages({
                         "string.empty" : "Le contenu de l'article est obligatoire"
                       }),
-    
+    article_category : joi.string()
+                       .required()
+                       .messages({
+                        "string.empty" : "la categorie de l'article est obligatoire"
+                       }),
+
     article_image : joi.object({
         mimetype : joi.string()
                    .valid("image/jpg", "image/png", "image/bmp", "image/gif")
@@ -37,14 +42,17 @@ const articleValidation = joi.object({
                .messages({
                 "number.max" : "La taille du fichier ne pas depasse {#limits} caracteres "
                }),     
+    }).required().messages({
+      "object.base" : "L'image de l'article est obligatoire",
+      "any.required" : "L'image de l'article est obligatoire"
     }),
    
-    article_create_date : joi.date()
-                          .required()
-                          .default(Date.now())
-                          .messages({
-                            "any.required" : "La date de creation de l'article est obligatoire"
-                          }), 
+    // article_create_date : joi.date()
+    //                       .required()
+    //                       .default(Date.now())
+    //                       .messages({
+    //                         "any.required" : "La date de creation de l'article est obligatoire"
+    //                       }), 
 
     article_category : joi.string() 
                        .required()

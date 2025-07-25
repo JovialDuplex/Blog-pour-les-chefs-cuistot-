@@ -3,25 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/materialize.css">
     <link rel="stylesheet" href="/css/style.css">
 
     <title>Acceuil</title>
     
 </head>
 <body>
-    La liste des articles 
-    <ul>
-        <% for (article of list_article) { %>
-            <li> <a href="/blog/article/show/<%= article.article_id %>"><%= article.article_title %> </a></li>
-        <% } %>
-    </ul>
+    <p>
+        Ajouter des articles en cliquant ici -> <a href="/blog/article/add-article-page"> add </a>
+    </p>
 
+     
+    <% if (list_article.length != 0 ) { %>
+    
+    <!-- <ul>
+        <% for (article of list_article) { %>
+            <li> <a href="/blog/article/show/<%= article._id %>"><%= article.article_title %> </a></li>
+        <% } %>
+    </ul> -->
+
+    <table width="100%" border="1">
+        <caption>Le tableau des articles </caption>
+        <% for (article of list_article) { %>
+        <tr>
+            <td> <strong><%= article.article_title %></strong> </td>
+            <td> <form method="get" action="/blog/article/show/<%= article._id %>"><button class="btn-small" type="submit"> Afficher </button></form></td>
+            <td> <form method="put" action="#"><button class="btn-small"> Mettre a jour </button></form></td>
+            <td> <button class="btn-small my" onclick="deleteArticle('<%= article._id%>')">Supprimer</button> </td>
+        </tr>
+        <% } %>
+    </table>
+
+
+    <% } else { %>
+        <strong> Article vide </strong>
+    <% } %>
 
     <script src="/js/jquery.js"></script>
-    <script src="/js/bootstrap.js"></script>
+    <script src="/js/materialize.js"></script>
     <script>
-        
+        function deleteArticle(id_article) {
+            const xhttp = new XMLHttpRequest();
+            xhttp.open("DELETE", `/blog/article/delete/${id_article}`, true);
+            xhttp.send();
+            location.reload();
+        }
+
     </script>
 </body>
 </html>
