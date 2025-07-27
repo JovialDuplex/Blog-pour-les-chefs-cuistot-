@@ -10,7 +10,8 @@ function appConfig(app) {
 
 function appConfigMiddleware(app , express) {
     app.use(express.static(path.join(__dirname, "public"))); // define static folder of my app 
-    
+    app.use(express.json());
+    app.use(express.urlencoded({extended : true}));   
 }
 
 

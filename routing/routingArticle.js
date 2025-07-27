@@ -7,6 +7,7 @@ const categoryModel = require("../models/category");
 const articleModel = require("../models/article");
 const multer = require("multer");
 const { request } = require("http");
+const { PassThrough } = require("stream");
 const mongooseType = require("mongoose").Schema.Types;
 
 var form_data = {
@@ -34,8 +35,14 @@ router.get("/add-article-page/", (request, response)=>{
     response.render("addArticlePage", form_data);
 });
 
-// GESTION DES ARTICLES ------------------------------------------------ 
+router.get("/update-article-page/:id_article", async (request, response)=>{
+    const article = await articleModel.findById(request.params.id_article);
+    form_data.article = article;
+    response.render("updateArticle", form_data);
+});
 
+
+// -------------------------------- GESTION DES ARTICLES ------------------------------------------------ 
 
 // AJOUT DE L'ARTICLE ---------------------------------
 router.post("/add-article-page/add", upload.single("article_image"),(request, response, next)=>{
@@ -96,9 +103,8 @@ router.get("/show/:id_article", async (request, response)=>{
     
 });
 
-// SUPPRESSION DE L'ARTICLE 
+// SUPPRESSION DE L'ARTICLE-------------------------------------
 router.delete("/delete/:id_article", async (request, response)=>{
-    const id = new mongooseType.ObjectId(request.params.id_article);
     const article = await articleModel.findById(request.params.id_article);
 
     console.log(article.article_image);
@@ -116,6 +122,35 @@ router.delete("/delete/:id_article", async (request, response)=>{
         console.log("erreur survenue lors de la suppression de l'article ");
         response.status(500).send("erreur survenue lors de la suppression de l'article ")
     })
+});
+
+
+
+// MISE A JOUR DE L'ARTICLE 
+router.post("/update-article-page/update/:id_article", upload.single("article_image"), async (request, response)=>{
+    const myarticle = await articleModel.findById(request.params.id_article);
+
+    const updateData = {
+        article_title : request.body.article_title,
+        article_descrip : request.body.article_descrip,
+        article_content : request.body.article_content,
+        article_category : request.body.article_category,
+    };
+
+    if(request.file) {
+        updateData.article_image = "/upload/articles/" + request.file.filename;
+        fs.unlinkSync(path.join(__dirname, "..", "public", myarticle.article_image));
+    }
+    
+    const article = await articleModel.findByIdAndUpdate(request.params.id_article, updateData, { new : true, runValidators : true});
+    
+    if(article) {
+        console.log("article mis a jour avec succes ");
+        response.redirect("/blog/article/");
+    } else {
+        console.log("article non trouve ");
+        response.status(404).json({error : "article non trouvee"});
+    }
 });
 
 module.exports = router;
