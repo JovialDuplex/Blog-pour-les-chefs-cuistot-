@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("../utils/importCSS") %>
+    <title>Article</title>
+</head>
+<body>
+    <%- include("../utils/header", {user}) %>
+    <p>
+        Ajouter des articles en cliquant ici -> <a href="/blog/article/add-article-page"> add </a>
+    </p>
+
+     
+    <% if (list_article.length != 0 ) { %>
+
+    <table width="100%" border="1">
+        <caption>Le tableau des articles </caption>
+        <% for (article of list_article) { %>
+        <tr>
+            <td> <strong><%= article.article_title %></strong> </td>
+            <td> <form method="get" action="/blog/article/show/<%= article._id %>"><button class="btn-small" type="submit"> Afficher </button></form></td>
+            <td> <form method="get" action="/blog/article/update-article-page/<%= article._id %>"><button class="btn-small"> Mettre a jour </button></form></td>
+            <td> <button class="btn-small my" onclick="deleteArticle('<%= article._id%>')">Supprimer</button> </td>
+        </tr>
+        <% } %>
+    </table>
+
+
+    <% } else { %>
+        <strong> Article vide </strong>
+    <% } %>
+    
+    <%- include("../utils/importJS") %>
+    <script>
+        function deleteArticle(id_article) {
+            const xhttp = new XMLHttpRequest();
+            xhttp.open("DELETE", `/blog/article/delete/${id_article}`, true);
+            xhttp.send();
+            location.reload();
+        }
+
+    </script>
+</body>
+</html>

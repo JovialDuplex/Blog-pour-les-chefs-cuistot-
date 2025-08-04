@@ -1,0 +1,17 @@
+<nav class="nav-wrapper indigo">
+    <a class="brand-logo left"> Blog </a>
+    <ul class="right">
+        <li class="actif"> <a href="/blog/"> Acceuil </a> </li>
+        <li> <a href="/blog/article/"> Article </a> </li>
+        <% if (user) { %>
+        <li class="dropdown-trigger" data-target="mydrop"> <a href="/blog/user/" ><i class="fas fa-user"></i> </a> </li>
+        <% } else { %>
+        <li> <a href="/blog/user/connection" class="btn-small"> Se connecter </a></li>
+        <% } %>
+    </ul>
+
+    <ul id="mydrop" class="dropdown-content">
+        <li> <%= user.user_name %></li>
+        <li> <a class="btn-small" href="/blog/user/disconnect"> Deconnexion </a></li>
+    </ul>
+</nav>

@@ -6,8 +6,6 @@ const {storageArticleImage} = require("../appconfig");
 const categoryModel = require("../models/category");
 const articleModel = require("../models/article");
 const multer = require("multer");
-const { request } = require("http");
-const { PassThrough } = require("stream");
 const mongooseType = require("mongoose").Schema.Types;
 
 var form_data = {
@@ -15,10 +13,16 @@ var form_data = {
     errors : [],
 }
 
+const protectRoute = ( request, response, next )=>{
+    if(!request.session.idUtilisateur) {
+        response.redirect("/blog/user/register");
+    }
+    next();
+};
 
 // Recuperation de la liste des categories 
 
-categoryModel.find({}).then((result)=>{
+categoryModel.find().then((result)=>{
     form_data.list_category = result;
 
 }).catch((error)=>{
@@ -32,13 +36,13 @@ const upload = multer({
 
 // autres routes utile -----------------------------------------------
 router.get("/add-article-page/", (request, response)=>{
-    response.render("addArticlePage", form_data);
+    response.render("articles/addArticlePage", form_data);
 });
 
 router.get("/update-article-page/:id_article", async (request, response)=>{
     const article = await articleModel.findById(request.params.id_article);
     form_data.article = article;
-    response.render("updateArticle", form_data);
+    response.render("articles/updateArticle", form_data);
 });
 
 
@@ -65,7 +69,7 @@ router.post("/add-article-page/add", upload.single("article_image"),(request, re
         }));
 
         form_data.errors = details;
-        response.render("addArticlePage", form_data);
+        response.render("articles/addArticlePage", form_data);
         
         form_data.errors = [];
 
@@ -99,7 +103,7 @@ router.post("/add-article-page/add", upload.single("article_image"),(request, re
 router.get("/show/:id_article", async (request, response)=>{
     // get article in database 
     const article = await articleModel.findById(request.params.id_article);
-    response.render("showArticle", {article : article});
+    response.render("articles/showArticle", {article : article});
     
 });
 
@@ -141,7 +145,7 @@ router.post("/update-article-page/update/:id_article", upload.single("article_im
         updateData.article_image = "/upload/articles/" + request.file.filename;
         fs.unlinkSync(path.join(__dirname, "..", "public", myarticle.article_image));
     }
-    
+
     const article = await articleModel.findByIdAndUpdate(request.params.id_article, updateData, { new : true, runValidators : true});
     
     if(article) {

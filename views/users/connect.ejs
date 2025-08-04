@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+</head>
+<body>
+    <h2> CONNEXION AU BLOG </h2>
+
+    <form method="post" action="/blog/user/connection">
+        <p>
+            <label for="email"> Votre Email : </label>
+            <input type="email" name="user_email" placeholder="Votre email">
+        </p>
+
+        <p>
+            <label for="password"> Votre mot de passe : </label>
+            <input type="password" name="user_password" placeholder="votre password">
+        </p>
+
+        <input type="submit" value="se Connecter">
+
+    </form>
+    <a href="/blog/user/register"> Je n'ai pas de compte </a>
+</body>
+</html>

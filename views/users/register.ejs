@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+</head>
+<body>
+    <% if (errors.length != 0) { %>
+        <strong> Les erreurs sont survenue lors de la validation du formulaire </strong>
+        <ul>
+            <% errors.forEach(error => { %>
+                <li> <%= JSON.stringify(error) %> </li>
+            <% }) %>
+        </ul>
+
+    <% } %>
+
+    <h1> Inscription </h1>
+    <form method="post" action="/blog/user/register" enctype="multipart/form-data">
+        <p>
+            <label for="user_name"> Nom Utilisateur : </label>
+            <input type="text" name="user_name" placeholder="Nom de l'utilisateur ">
+        </p>
+
+        <p>
+            <label for="user_email"> Adresse Email : </label>
+            <input type="email" name="user_email" placeholder="@gmail.com">
+        </p>
+
+        <p>
+            <label for="user_password"> Mot de passe : </label>
+            <input type="password" name="user_password" placeholder="mot de passe">
+        </p>
+        
+        <p>
+            <label for="user_password"> Confirmer le mot de passe : </label>
+            <input type="password" placeholder="Confirmer le mot de passe">
+        </p>
+
+        <p>
+            <label for="user_image"> Photo de profile : </label>
+            <input type="file" accept="image/*" name="user_image">
+        </p>
+
+        <input type="submit" value="S'inscrire">
+    </form>
+
+    <a href="/blog/user/connection"> J'ai deja un compte </a>
+
+</body>
+</html>

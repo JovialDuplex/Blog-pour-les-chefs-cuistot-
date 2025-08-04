@@ -1,6 +1,9 @@
 const path = require("path");
 const multer = require("multer");
 const mongoose = require("mongoose");
+const session = require("express-session");
+const MongoStore = require('connect-mongo');
+const userModel = require("./models/user");
 
 function appConfig(app) {
     app.set("views", path.join(__dirname, "views")); // define my views folder
@@ -12,9 +15,32 @@ function appConfigMiddleware(app , express) {
     app.use(express.static(path.join(__dirname, "public"))); // define static folder of my app 
     app.use(express.json());
     app.use(express.urlencoded({extended : true}));   
+    
+    app.use(session({
+        name : process.env.SESSION_NAME,
+        resave: false,
+        saveUninitialized : false,
+        store : MongoStore.create({ mongoUrl : process.env.DATABASE_URL}),
+        secret : process.env.SESSION_SECRET,
+        cookie : {
+            maxAge : 1000 * 60 * 60 * 24,
+            secure : false
+        }
+    }));
+
+    app.use((request, response, next)=>{
+        console.log(request.method, request.url);
+        next();
+    });
+
+    // app.use(async (request, response, next)=>{
+    //     const { userId } = request.session;
+    //     if(userId) {
+    //         response.locals.user = await userModel.findById(userId);
+    //     } 
+    //     next();
+    // });
 }
-
-
 
 
 const storageArticleImage = multer.diskStorage({
